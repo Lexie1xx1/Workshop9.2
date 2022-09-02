@@ -258,4 +258,4 @@ Below. Add a few sentences for the species (or multiple species) you talked abou
 
 # **Task 10**
 
-and the challenges (or maybe lack of challenges) of reproducing others' work. If you finish the above tasks, then, have a crack at this one. See the html for details.
+This is a stretch task on the use of *GitHub* and the challenges (or maybe lack of challenges) of reproducing others' work. If you finish the above tasks, then, have a crack at this one. See the html for details.
