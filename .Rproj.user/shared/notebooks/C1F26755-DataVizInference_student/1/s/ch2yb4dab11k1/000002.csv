@@ -1,0 +1,1 @@
+"0","penguins %>% filter(!(is.na(sex))) %>% ggplot(mapping = aes(body_mass_g,sex)) + geom_point()+facet_wrap(vars(species))"

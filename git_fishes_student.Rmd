@@ -126,12 +126,17 @@ Second, drop out irrelevant columns and check that there are no spelling issues 
 
 ```{r summaryTab}
 # Drop irrelevant columns
-data_n %>% select("species","treatment","animal_id","activity")
+data_nn <- data_n %>% select("species","treatment","animal_id","activity")
+data_nn
+```
+```{r}
 # Check spelling in species and treatment but also generate a summary table
+data_nnw <- data_nn %>% filter(species!="whitedams")
+data_nnw
 ```
 ```{r}
 # Use flextable to render the summary table in a tidy format
-ft <- data_n %>% group_by(species,treatment) %>% summarise(mean=mean(activity),standard_error=sd(activity),number=length(treatment))
+ft <- data_nnw %>% group_by(species,treatment) %>% summarise(mean=mean(activity),standard_error=sd(activity),sample_size=length(treatment))
 flextable(ft)
 ```
 
@@ -152,7 +157,8 @@ Ignoring figures can be important because they take up quite a lot of space in y
 
 ```{r, prettyfig, fig.align='center', fig.cap="add a legend here"}
 # ggplot figure showing mean activity for each treatment (Control, OA) for each species.
-ggplot(data_n, mapping = aes(x = treatment, y = activity, colour= species)) + geom_boxplot()
+ggplot(data_nnw, mapping = aes(x = treatment, y = activity, colour= species)) + geom_boxplot() + facet_wrap(vars(species))
+```
 
 ```
 
@@ -162,7 +168,7 @@ Note the code chunk used to make the figure. It has a `fig.cap` argument. That m
 
 Now that you have the figure you may also want to write / save it as a separate file. Use `ggsave` function to save the figure(s) to your new `output/figures/`:
 
-```{r, savefig}
+```{r,savefig}
 # Use ggsave to save the figure
 ggsave('./output/figures/m_a.png',width= 4, height= 6)
 ```

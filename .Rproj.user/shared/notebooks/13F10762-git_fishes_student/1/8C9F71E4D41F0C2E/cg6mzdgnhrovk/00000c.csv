@@ -1,0 +1,8 @@
+"0","library(png)"
+"0","acantho <- readPNG(""acantho.png"")"
+"0","ambon <- readPNG(""ambon.png"")"
+"0","chromis <- readPNG(""chromis.png"")"
+"0","humbug <- readPNG(""humbug.png"")"
+"0","lemon <- readPNG(""lemon.png"")"
+"0","whitedams <- readPNG(""whitedams.png"")"
+"0","ggplot(data_nn, mapping = aes(x = species, y = activity, colour= treatment)) + geom_boxplot() + annotation_raster(acantho,0.5,1.5,50,60) + annotation_raster(ambon,1.5,2.5,50,60) + annotation_raster(chromis,2.5,3.5,50,60) + annotation_raster(humbug,3.5,4.5,50,60) + annotation_raster(lemon,4.5,5.5,50,60) + annotation_raster(whitedams,5.5,6.5,50,60)"

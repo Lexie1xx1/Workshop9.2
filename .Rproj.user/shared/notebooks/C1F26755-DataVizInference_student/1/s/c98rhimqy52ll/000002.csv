@@ -1,0 +1,3 @@
+"0","penguins %>% filter(!(is.na(sex))) %>% ggplot(mapping = aes(body_mass_g,bill_depth_mm)) + geom_point()+geom_smooth(method='lm')+facet_wrap(vars(species,sex))"
+"2","`geom_smooth()` using formula 'y ~ x'
+"
