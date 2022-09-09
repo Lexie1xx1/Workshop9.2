@@ -1,0 +1,4 @@
+"0","# You want to make changes to your collaborators figure in Task 5. Maybe you want to create a figure that focuses only on three fish species instead of the 5. More specifically, chromis, lemon, and acantho. Add code here to revise their figure to do that."
+"0","Three <- data_nn %>% filter(data_nn$species==c(""chromis"",""lemon"",""acantho""))"
+"0","ggplot(Three, mapping = aes(x = species, y = activity, colour= treatment)) + geom_boxplot() + annotation_raster(chromis,0.5,1.5,40,60) + annotation_raster(lemon,1.5,2.5,40,60) + annotation_raster(acantho,2.5,3.5,40,60)"
+"0",""

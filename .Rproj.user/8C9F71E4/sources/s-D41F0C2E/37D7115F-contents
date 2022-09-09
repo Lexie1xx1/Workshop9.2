@@ -1,7 +1,7 @@
 ---
 title: "Git, GitHub & Ocean Acidification"
-author: "Yixuan Li u7457310"
-date: "`r Sys.Date()`"
+author: "<Shiyu Tang_u7457409>"
+date: "2/9/2022"
 output: 
   bookdown::html_document2:
     code_folding: show
@@ -26,7 +26,6 @@ Throughout we are also going to learn a bit more about how to format Rmarkdown d
 
 ```{r loadpacks, message=FALSE, results='hide'}
 # Install a load of packages that we'll use. I'll show you a shortcut that I love to use. Try using the p_load function in the "pacman" package. p_load will execute both the install.packages and library commands in one shot so they only need to be used once to install pacman itself.
-install.packages("pacman", repos = "http://cran.us.r-project.org")
 library(pacman)
 
 # Install bookdown for rendering because we'll need this. While we're at it, lets also install /load the tidyverse
@@ -40,7 +39,7 @@ p_load(bookdown, tidyverse, ggforce, flextable, latex2exp, png, magick) # basica
 
 While the tasks are meant to get you familiar with how *GitHub* works you should try and make regular commits as you work your way through. We want to see how often you're using *Git*. Below, within the `()` brackets provide the link to your GitHub Repo. Just cut and paste it so we know what the repo name is and where it is. 
 
-[My GitHub Repository](https://github.com/Lexie1xx1/Workshop9.2.git)
+[My GitHub Repository](https://github.com/Sessica921/Workshop9.2/blob/bdf674682565459832511d7bf32096080d4fa801/git_fishes_student.Rmd)
 
 By adding the link in the `()` brackets it will hyperlink "My GitHub Repository". This is how to hyperlink in Rmarkdown documents.
 
@@ -53,7 +52,7 @@ This task involves cloning your repository on your computer. Where should we pla
 
 ```{r, answer1, echo=TRUE, eval = FALSE}
 
-## I think this is because if we want to use *GitHub*, we need to upload the changed code to the cloud before it can be seen in *GitHub* history. So if we forget to upload changes, we won't be able to save our changes on GitHub.
+## Since the document and the text are public, it is easy to cause information leakage.
 
 ```
 
@@ -63,8 +62,8 @@ Before moving on you might have noticed that the code block above has a name `an
 
 >**Question 2**: In the second code block called `answer1` if we change echo = TRUE to echo = FALSE what will happen to the code block `answer1` when you render it?
 
-```{r answer2, echo=FALSE, eval = FALSE}
-# ## When echo is TRUE, we can see the code and the result of running it. With echo equal to FALSE, we can only see the result of the code running, and the code will be hidden.But if it is pure text, it does not affect.
+```{r answer2, echo=TRUE, eval = FALSE}
+# I would only see the results that in our chunks but I could not see the codes.
 ```
 
 **Important**: Notice that `eval = FALSE` for many code chunks. When you complete the tasks. Make sure to change these to `TRUE` otherwise you will find your code does not run!
@@ -94,6 +93,7 @@ Write your answer in the code chunk below:
 ```{r, loaddata, eval = FALSE, echo=TRUE}
 
 path <- "./data/OA_activitydat_20190302_BIOL3207.csv"
+  
 data <- read_csv(path)
 
 ```
@@ -104,7 +104,7 @@ Let's say that you added a new data folder that was inside an output folder (i.e
 
 ```{r, write, eval = FALSE, echo=TRUE}
 
-path <- "./output/data/Change"
+path <- "./output/data"
 
 write_csv(data, file = path)
 
@@ -118,35 +118,31 @@ We're ready for some coding! Lets do some coding and wrangling of the `OA_activi
 First, write some code below to remove missing data
 
 ```{r, rmMiss}
-# Code to removing missing data from the `OA_activitydat_20190302_BIOL3207.csv` data frame.
-data_n <- data %>% filter(!(is.na(activity)))
+new_data <- data %>% filter(!(is.na(activity)))
 ```
 
-Second, drop out irrelevant columns and check that there are no spelling issues in `species` and `treatment`. Create a table of summary data that includes: 1) the mean, 2) the standard error and 3) the sample sizes of unique fish across ALL six fish species for each treatment. This will also help you detect any spelling errors. You can use the R package. [`flextable`](https://ardata-fr.github.io/flextable-book/) to print out the results in a nice neat format! If you haven't heard about `flextable` spend 10 or so minutes having a look at it's functionality. It's incredible! You'll use this for tables throughout.
+Second, drop out irrelevant columns and check that there are no spelling issues in `species` and `treatment`. Create a table of summary data that includes: 1) the mean, 2) the standard error and 3) the sample sizes of unique fish across ALL six fish species for each treatment. This will also help you detect any spelling errors. You can use the R package [`flextable`](https://ardata-fr.github.io/flextable-book/) to print out the results in a nice neat format! If you haven't heard about `flextable` spend 10 or so minutes having a look at it's functionality. It's incredible! You'll use this for tables throughout.
 
 ```{r summaryTab}
 # Drop irrelevant columns
-data_nn <- data_n %>% select("species","treatment","animal_id","activity")
-data_nn
-```
-```{r}
+new_data1 <- new_data %>% filter(!species=="whitedams")
 # Check spelling in species and treatment but also generate a summary table
-data_nnw <- data_nn %>% filter(species!="whitedams")
-data_nnw
-```
-```{r}
+target_data <- new_data %>% group_by(species, treatment) %>% summarise (
+  mean=mean(activity),
+  sd=sd(activity),
+  sample_size= n()
+  )
+target_data
 # Use flextable to render the summary table in a tidy format
-ft <- data_nnw %>% group_by(species,treatment) %>% summarise(mean=mean(activity),standard_error=sd(activity),sample_size=length(treatment))
-flextable(ft)
+flextable(target_data)
 ```
-
 
 **STOP**: Before moving on, it's a good time to establish some good *GitHub* practices. You have just done an important step. It's time to save this file, stage it and commit it so that you have a record. Push these changes up using *GitHub Desktop*. It's important to do this frequently. It's probably not needed after every line of code, but it's good to do this when you have completed an important coding step. Of course, there's no harm in doing it more often. It will provide fine-scale tracking for you!
 
 >**Question 5**: The new version of your Rmarkdown file should now be up on *GitHub*. In the browser window click on your most recent commit. Have a look at the file versioning system. You will notice two files side-by-side. Describe what you notice is being presented online. What do the red and green highlights mean?
 
 ```{r answer5, echo=TRUE, eval=FALSE}
-## Red is what's been removed, green is what's been added.
+## The red highlights mean the things that I delete and the green highlights mean the things that I added.
 ```
 
 # **Task 5**
@@ -157,9 +153,9 @@ Ignoring figures can be important because they take up quite a lot of space in y
 
 ```{r, prettyfig, fig.align='center', fig.cap="add a legend here"}
 # ggplot figure showing mean activity for each treatment (Control, OA) for each species.
-ggplot(data_nn, mapping = aes(x = treatment, y = activity, colour= species)) + geom_boxplot() + facet_wrap(vars(species))
+ggplot(target_data, mapping = aes(x = species, y = mean, colour=treatment))+
+   geom_boxplot(aes(fill= treatment))
 ```
-
 
 **Stretch Task**: The Clark et al. 2020 paper plots some pretty pictures on their figures. You have access to a folder called "pics/". Add the pics of the difference species from the "pics/" folder to your new plot. Explore the function `annotation_raster()` which might help you achieve this goal.
 
@@ -167,27 +163,32 @@ Note the code chunk used to make the figure. It has a `fig.cap` argument. That m
 
 Now that you have the figure you may also want to write / save it as a separate file. Use `ggsave` function to save the figure(s) to your new `output/figures/`:
 
-```{r,savefig}
-library(png)
-acantho <- readPNG("acantho.png")
-ambon <- readPNG("ambon.png")
-chromis <- readPNG("chromis.png")
-humbug <- readPNG("humbug.png")
-lemon <- readPNG("lemon.png")
-whitedams <- readPNG("whitedams.png")
-ggplot(data_nn, mapping = aes(x = species, y = activity, colour= treatment)) + geom_boxplot() + annotation_raster(acantho,0.5,1.5,50,60) + annotation_raster(ambon,1.5,2.5,50,60) + annotation_raster(chromis,2.5,3.5,50,60) + annotation_raster(humbug,3.5,4.5,50,60) + annotation_raster(lemon,4.5,5.5,50,60) + annotation_raster(whitedams,5.5,6.5,50,60)
-```
-
-```{r}
+```{r, savefig}
 # Use ggsave to save the figure
-ggsave('./output/figures/m_a.png',width= 4, height= 6)
+library(png)
+acantho <- readPNG("./pics/acantho.png")
+ambon <- readPNG("./pics/ambon.png")
+chromis <- readPNG("./pics/chromis.png")
+humbug <- readPNG("./pics/humbug.png")
+lemon <- readPNG("./pics/lemon.png")
+whitedams <- readPNG("./pics/whitedams.png")
+ggplot(target_data, mapping = aes(x = species, y = mean, colour=treatment))+
+   geom_boxplot(aes(fill= treatment))+
+   ylim(0,50)+
+   annotation_raster(acantho,0.5,1.5, 40,50)+
+   annotation_raster(ambon,1.5,2.5, 40,50)+
+   annotation_raster(chromis,2.5,3.5, 40,50)+
+   annotation_raster(humbug,3.5,4.5, 40,50)+
+   annotation_raster(lemon,4.5,5.5, 40,50)+
+   annotation_raster(whitedams,5.5,6.5, 40,50)
+ggsave('./output/figures/target.png',width = 6, height= 8)
+   
 ```
 
 >**Question 6**: Given that you have added `output/figures/` to your `.gitignore` file describe what you notice about what you see in *GitHub Desktop*. 
 
 ```{r}
-## Write your answer here
-
+## In my Github Desktop, I could see the pictures I add to my plot and the last plot that I save.
 ```
 
 Last question for this task. I promise! It's important to think very carefully about what you track and ignore.
@@ -195,7 +196,7 @@ Last question for this task. I promise! It's important to think very carefully a
 >**Question 7**: Assume that you added the `pics/` folder to your working directory to plot pictures of each fish on your figure. Do you want to track the files in the pic/ folder on GitHub despite them being .png files? Explain your reasoning. 
 
 ```{r, answer6}
-## Add your answer here
+## No, because in this condition the result figures would in a mess compared to save them in a file.
 ```
 
 # **Task 6**
@@ -204,9 +205,16 @@ This task involves teaming up with a collaborator. Exchange *GitHub* username de
 Now, lets create a new figure in the code block below that simplifies the one produced in **Task 5**. Instead of all species, lets just plot three of the species (chromis, lemon, and acantho). In the figure code chunk make sure you add the necessary arguments (e.g., `fig.cap`) so that you can refer to Figure \@ref(fig:collabFig).
 
 ```{r, collabFig, echo=TRUE, eval=TRUE}
-# You want to make changes to your collaborators figure in Task 5. Maybe you want to create a figure that focuses only on three fish species instead of the 5. More specifically, chromis, lemon, and acantho. Add code here to revise their figure to do that.
-Three <- data_nn %>% filter(data_nn$species==c("chromis","lemon","acantho"))
-ggplot(Three, mapping = aes(x = species, y = activity, colour= treatment)) + geom_boxplot() + annotation_raster(chromis,0.5,1.5,40,60) + annotation_raster(lemon,1.5,2.5,40,60) + annotation_raster(acantho,2.5,3.5,40,60)
+ggplot(target_data, mapping = aes(x = species, y = mean, colour=treatment))+
+   geom_boxplot(aes(fill= treatment))+
+   ylim(0,50)+
+   annotation_raster(acantho,0.5,1.5, 40,50)+
+   annotation_raster(ambon,1.5,2.5, 40,50)+
+   annotation_raster(chromis,2.5,3.5, 40,50)+
+   annotation_raster(humbug,3.5,4.5, 40,50)+
+   annotation_raster(lemon,4.5,5.5, 40,50)+
+   annotation_raster(whitedams,5.5,6.5, 40,50)
+ggsave('./output/figures/target.png',width = 6, height= 8)
 ```
 
 
@@ -238,54 +246,29 @@ There's not too much to do in this task on the coding front! You just need to cr
 
 # **Task 9**
 Here, run some statistical tests to determine, for each species, whether the control vs high $CO^2$ treatments differ significantly from each other and in what direction. Provide the difference in means, their 95% confidence intervals, t-statistic, df and p-value. 
-```{r, stats, echo=TRUE, eval=TRUE}
-data_acantho <- data_nn %>% filter(species=="acantho")
-t.test_acantho <- t.test(data_acantho$activity[which(data_acantho$treatment=="CO2")],data_acantho$activity[which(data_acantho$treatment=="control")])
-t.test_acantho
-```
-```{r}
-data_ambon <- data_nn %>% filter(species=="ambon")
-t.test_ambon <- t.test(data_ambon$activity[which(data_ambon$treatment=="CO2")],data_ambon$activity[which(data_ambon$treatment=="control")])
-t.test_ambon
-```
-```{r}
-data_chromis <- data_nn %>% filter(species=="chromis")
-t.test_chromis <- t.test(data_chromis$activity[which(data_chromis$treatment=="CO2")],data_chromis$activity[which(data_chromis$treatment=="control")])
-t.test_chromis
-```
-```{r}
-data_humbug <- data_nn %>% filter(species=="humbug")
-t.test_humbug <- t.test(data_humbug$activity[which(data_humbug$treatment=="CO2")],data_humbug$activity[which(data_humbug$treatment=="control")])
-t.test_humbug
-```
-```{r}
-data_lemon <- data_nn %>% filter(species=="lemon")
-t.test_lemon <- t.test(data_lemon$activity[which(data_lemon$treatment=="CO2")],data_lemon$activity[which(data_lemon$treatment=="control")])
-t.test_lemon
-```
-```{r}
-data_whitedams <- data_nn %>% filter(species=="whitedams")
-t.test_whitedams <- t.test(data_whitedams$activity[which(data_whitedams$treatment=="CO2")],data_whitedams$activity[which(data_whitedams$treatment=="control")])
-t.test_whitedams
-```
 
 >**Stretch Task**: You can of course do this for each species seperately, but those who want a challenge, think about how you might use a loop or even some wrangling methods you have already learnt from the tidyverse to run these tests across all 6 species in a single block of code. If you're familiar with functions, you can even think about writing your own function! All these strategies will avoid having to copy and paste large chunks of code. If you're repeating anything, writing functions and loops are good ways to simplify.
 
-```{r}
-
+```{r, stats, echo=TRUE, eval=TRUE}
+#new_data_new <- data.frame(matrix(lapply(target_data,as.character)))
+#t.test(data=new_data_new$species,activity~treatment)
+acantho1 <- new_data %>% filter (species=="acantho")
+t.test(data=acantho1,activity~treatment)
+ambon1 <- new_data %>% filter (species=="ambon")
+t.test(data=ambon1,activity~treatment)
+chromis1 <- new_data%>% filter (species=="chromis")
+t.test(data=chromis1,activity~treatment)
+humbug1 <- new_data%>% filter (species=="humbug")
+t.test(data=humbug1,activity~treatment)
+lemon1 <- new_data %>% filter (species=="lemon")
+t.test(data=lemon1, activity~treatment)
+whitedams1 <- new_data %>% filter (species=="whitedams")
+t.test(data=whitedams1,activity~treatment)
 ```
 
 ```{r, table1, echo=TRUE, eval=TRUE, tab.cap = "write a caption here"}
-# Using the resulting object created above, which should be a table with all the summary statistics, t, df and p-value for each species create a table. Note that there is a tab.cap argument in the chunk arguments. Write a caption here. 
-species <- c("acantho", "ambon", "chromis", "humbug", "lemon", "whitedams")
-p.value <- c(t.test_acantho$p.value, t.test_ambon$p.value, t.test_chromis$p.value, t.test_humbug$p.value, t.test_lemon$p.value, t.test_whitedams$p.value)
-df <- c(t.test_acantho$parameter, t.test_ambon$parameter, t.test_chromis$parameter, t.test_humbug$parameter, t.test_lemon$parameter, t.test_whitedams$parameter)
-t.statistic <- c(t.test_acantho$statistic, t.test_ambon$statistic, t.test_chromis$statistic, t.test_humbug$statistic, t.test_lemon$statistic, t.test_whitedams$statistic)
-confi1 <- c(min(t.test_acantho$conf.int), min(t.test_ambon$conf.int), min(t.test_chromis$conf.int), min(t.test_humbug$conf.int), min(t.test_lemon$conf.int), min(t.test_whitedams$conf.int))
-confi2<- c(max(t.test_acantho$conf.int), max(t.test_ambon$conf.int), max(t.test_chromis$conf.int), max(t.test_humbug$conf.int), max(t.test_lemon$conf.int), max(t.test_whitedams$conf.int))
-difference.in.means <- c(abs(max(t.test_acantho$estimate)-min(t.test_acantho$estimate)), abs(max(t.test_ambon$estimate)-min(t.test_ambon$estimate)), abs(max(t.test_chromis$estimate)-min(t.test_chromis$estimate)), abs(max(t.test_humbug$estimate)-min(t.test_humbug$estimate)), abs(max(t.test_lemon$estimate)-min(t.test_lemon$estimate)), abs(max(t.test_whitedams$estimate)-min(t.test_whitedams$estimate)))
-
-result <- data.frame(species, p.value, df, t.statistic, confi1, confi2, difference.in.means)
+summarise(species=species()
+          t=)
 ```
 
 Now that you have a table, you can reference it within a document. For example, you can make a call to Table \@ref(tab:table1) by referring to the name of the code chunk. When you knit the html it will create a hyperlink to your table and insert a legend above the table for you. How cool is that!?
@@ -310,30 +293,7 @@ Re-analyse the data for a single species using permutations instead of a t-test.
 >**Stretch Task**:  If you really want a challenge try doing permutation tests for each species. Again, loops, functions or tidyverse (or even combinations might help). 
 
 ```{r, stretch2, echo=TRUE, eval=FALSE}
-lemon_1 <- data_lemon
-lemon_1$treatment <- lemon_1$treatment[sample(length(data_lemon$treatment))]
-head(lemon_1)
-## Run our loop and set in loop
-n_reps <- 10000
-## Store the result
-samp_dist <- rep(1,n_reps)
-## Set a loop
-for (i in 1:n_reps)
-{
-    lemon_11 <- data_lemon %>% mutate(treatment = treatment[sample(row_number())])
-    # The results of t-test
-    permuted_test <- t.test(lemon_11$activity[which(lemon_11$treatment=="CO2")],lemon_11$activity[which(lemon_11$treatment=="control")])
-    samp_dist[i] <- permuted_test$statistic
-}
-
-t_t.test_lemon <- t.test_lemon$statistic
-plot_tibble <- tibble(value = samp_dist,extreme = (abs(samp_dist) > abs(t_t.test_lemon)))
-## Draw a histogram
-ggplot(plot_tibble,aes(x=value,fill=extreme))+geom_histogram(bins=200)
-```
-```{r}
-permutation_pvalue <- sum(plot_tibble$extreme)/n_reps
-tibble(permutation_pvalue,t.test_lemon$p.value)
+# Add your code here.
 ```
 
 Below. Add a few sentences for the species (or multiple species) you talked about above to describe the permutation results:

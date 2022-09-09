@@ -1,0 +1,28 @@
+{
+    "id": "4BC758D3",
+    "path": null,
+    "project_path": null,
+    "type": "object_explorer",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1662702049480.0,
+    "source_on_save": false,
+    "relative_order": 6,
+    "properties": {
+        "id": "ba9a2f7590304564a8227d3aaab1a5e7",
+        "name": "t.test_acantho",
+        "title": "t.test_acantho",
+        "language": "R",
+        "source_window_id": "",
+        "Source": "Source"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 27303545194217576,
+    "encoding": "",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1662702049480,
+    "read_only": false,
+    "read_only_alternatives": []
+}

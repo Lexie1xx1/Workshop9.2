@@ -1,0 +1,2 @@
+"0","# Code to removing missing data from the `OA_activitydat_20190302_BIOL3207.csv` data frame."
+"0","data_n <- data %>% filter(!(is.na(activity)))"
