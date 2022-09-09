@@ -1,2 +1,3 @@
 # Workshop9.2
 17235712
+In the data folder is the raw data, which comes from Clark, T.D., Raby, G.D., Roche D.G., Binning, S.A., Speers-Roesch, B., Jutfelt, F. and Sudin, J. 2020. Ocean acidification does not impair the behaviour of coral reef fishes. Nature, 577: 370-375.. The.output folder contains a data folder and a Figures folder. In the data folder are the changes of my code, and in the Figures folder are the activities of the six fish's different treatments and their pictures. All PNG files are images of the six species.

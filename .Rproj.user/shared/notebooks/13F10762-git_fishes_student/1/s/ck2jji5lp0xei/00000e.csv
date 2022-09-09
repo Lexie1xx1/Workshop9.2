@@ -1,2 +1,0 @@
-"0","permutation_pvalue <- sum(plot_tibble$extreme)/n_reps"
-"0","tibble(permutation_pvalue,t.test_lemon$p.value)"

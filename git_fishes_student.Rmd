@@ -187,7 +187,7 @@ ggsave('./output/figures/m_a.png',width= 4, height= 6)
 
 ```{r}
 ## Write your answer here
-
+After writing the image path in the TXT document, the image is no longer available on GitHub.
 ```
 
 Last question for this task. I promise! It's important to think very carefully about what you track and ignore.
@@ -196,6 +196,7 @@ Last question for this task. I promise! It's important to think very carefully a
 
 ```{r, answer6}
 ## Add your answer here
+When uploaded to Github, they are visible to collaborators in the folder, even though they are PNG files.
 ```
 
 # **Task 6**
@@ -340,7 +341,7 @@ tibble(permutation_pvalue,t.test_lemon$p.value)
 Below. Add a few sentences for the species (or multiple species) you talked about above to describe the permutation results:
 
 **Add your text and inline code chunks here**
-
+The difference between the two p-values is small, indicating that there is little difference between the results of lemon's control and CO2 treatments.
 # **Task 10**
 
 This is a stretch task on the use of *GitHub* and the challenges (or maybe lack of challenges) of reproducing others' work. If you finish the above tasks, then, have a crack at this one. See the html for details.

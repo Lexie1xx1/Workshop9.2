@@ -1,3 +1,0 @@
-"0","lemon_1 <- data_lemon"
-"0","lemon_1$treatment <- lemon_1$treatment[sample(length(data_lemon$treatment))]"
-"0","head(lemon_1)"
