@@ -1,2 +1,0 @@
-"0","# ggplot figure showing mean activity for each treatment (Control, OA) for each species."
-"0","ggplot(data_nnw, mapping = aes(x = treatment, y = activity, colour= species)) + geom_boxplot() + facet_wrap(vars(species))"

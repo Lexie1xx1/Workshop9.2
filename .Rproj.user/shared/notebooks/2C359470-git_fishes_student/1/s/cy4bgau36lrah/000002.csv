@@ -1,0 +1,4 @@
+"0","collab_data <- new_data %>% filter(species==c(""chromis"",""lemon"",""acantho""))"
+"2","Error in filter(., species == c(""chromis"", ""lemon"", ""acantho"")) : 
+  object 'new_data' not found
+"

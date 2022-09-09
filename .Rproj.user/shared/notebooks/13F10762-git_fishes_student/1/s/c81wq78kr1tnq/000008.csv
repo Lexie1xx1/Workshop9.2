@@ -1,3 +1,0 @@
-"0","# Drop irrelevant columns"
-"0","data_nn <- data_n %>% select(""species"",""treatment"",""animal_id"",""activity"")"
-"0","data_nn"
